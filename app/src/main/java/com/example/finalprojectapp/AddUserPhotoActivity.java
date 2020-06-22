@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +41,7 @@ public class AddUserPhotoActivity extends AppCompatActivity implements View.OnCl
 
     EditText comment;
     ImageView postImage,postButton;
-    TextView back;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

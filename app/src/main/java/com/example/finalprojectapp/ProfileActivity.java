@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     ImageView imageView;
     TextView userNameHolder,userEmailHolder;
-    Button searchOtherButton,viewUserPhotoButton;
+    FloatingActionButton searchOtherButton,viewUserPhotoButton;
 
     FirebaseDatabase userInformation;
     DatabaseReference ref;
