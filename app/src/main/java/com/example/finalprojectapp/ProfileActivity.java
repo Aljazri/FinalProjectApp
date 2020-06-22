@@ -73,7 +73,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.view_photo_button:
-                startActivity(new Intent(ProfileActivity.this,ViewUserPhoto.class));
+                Intent intent = new Intent(ProfileActivity.this,ViewUserPhoto.class);
+                startActivity(intent);
                 break;
             case R.id.search_other_button:
                 startActivity(new Intent(ProfileActivity.this,SearchOtherUser.class));

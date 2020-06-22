@@ -22,28 +22,27 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class ViewUserPhoto extends AppCompatActivity implements View.OnClickListener{
+public class ViewOtherUsersPhoto extends AppCompatActivity{
 
     DatabaseReference ref;
     RecyclerView recyclerView;
     ArrayList<Photo> photoList;
     RecyclerViewPhotoAdapter adapter;
-    FloatingActionButton addPhoto;
+    String uId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_photo);
 
+        uId = getIntent().getStringExtra("Uid");
         recyclerView = findViewById(R.id.recycler_view_for_photos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         photoList = new ArrayList<Photo>();
-        addPhoto = findViewById(R.id.add_photo);
-        addPhoto.setOnClickListener(this);
 
         ref = FirebaseDatabase.getInstance().getReference().child("UsersImages");
 
-        ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        ref.child(uId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
@@ -51,7 +50,7 @@ public class ViewUserPhoto extends AppCompatActivity implements View.OnClickList
                     Photo photo = dataSnapshot.getValue(Photo.class);
                     photoList.add(photo);
                 }
-                adapter = new RecyclerViewPhotoAdapter(ViewUserPhoto.this,photoList);
+                adapter = new RecyclerViewPhotoAdapter(ViewOtherUsersPhoto.this,photoList);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -60,13 +59,5 @@ public class ViewUserPhoto extends AppCompatActivity implements View.OnClickList
 
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId()==R.id.add_photo){
-            startActivity(new Intent(ViewUserPhoto.this,AddUserPhotoActivity.class));
-            finish();
-        }
     }
 }

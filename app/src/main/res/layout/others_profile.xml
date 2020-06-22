@@ -11,23 +11,12 @@
         android:layout_centerHorizontal="true">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/view_photo_button"
+            android:id="@+id/view_others_photo_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#082065"
             android:src="@drawable/ic_go_to_photos"
             android:contentDescription="View Photos"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/search_other_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#082065"
-            android:layout_toRightOf="@id/view_photo_button"
-            android:layout_marginLeft="30dp"
-            android:src="@drawable/ic_search"
-            android:contentDescription="Search Other"/>
-
     </RelativeLayout>
 
 
@@ -43,12 +32,12 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="30dp">
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_profile_image"
+                android:id="@+id/others_profile_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
@@ -58,26 +47,26 @@
                 app:civ_border_color="#082065"/>
 
             <TextView
-                android:id="@+id/user_name_text_view"
+                android:id="@+id/other_user_name_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:layout_below="@id/user_profile_image"
+                android:layout_below="@id/others_profile_image"
                 android:layout_marginTop="50dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/email_text_view"
+                android:id="@+id/others_email_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:layout_below="@id/user_name_text_view"
+                android:layout_below="@id/other_user_name_text_view"
                 android:layout_marginTop="50dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
 
-       </RelativeLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -102,7 +102,7 @@ public class AddUserPhotoActivity extends AppCompatActivity implements View.OnCl
                 Uri downloadUrl = task.getResult();
                 String imagePath = downloadUrl.toString();
 
-                DatabaseReference ref = firebaseDatabase.getReference().child(mAuth.getCurrentUser().getUid());
+                DatabaseReference ref = firebaseDatabase.getReference().child("UsersImages").child(mAuth.getCurrentUser().getUid());
                 final String newPhoto = ref.push().getKey();
 
                 HashMap<String,Object> imageData = new HashMap<>();

@@ -23,6 +23,9 @@
         <activity android:name=".LoginUser"/>
         <activity android:name=".ViewUserPhoto"/>
         <activity android:name=".AddUserPhotoActivity"/>
+        <activity android:name=".SearchOtherUser"/>
+        <activity android:name=".ViewOthersProfile"/>
+        <activity android:name=".ViewOtherUsersPhoto"/>
     </application>
 
 </manifest>

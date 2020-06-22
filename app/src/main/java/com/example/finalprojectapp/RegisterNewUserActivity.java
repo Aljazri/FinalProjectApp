@@ -114,14 +114,22 @@ public class RegisterNewUserActivity extends AppCompatActivity implements View.O
 
                             DatabaseReference reference1 = firebaseDatabase1.getReference().child("UsersInformation1");
                             DatabaseReference reference2 = firebaseDatabase1.getReference().child("UsersInformation2");
-                            final String newUser = reference2.push().getKey();
+                            final String key = reference2.push().getKey();
 
-                            HashMap<String,Object> userData = new HashMap<>();
-                            userData.put("username",userName.getText().toString());
-                            userData.put("userEmail",userEmail.getText().toString());
-                            userData.put("userPassword",userPassword.getText().toString());
-                            userData.put("profileImage",imagePath);
-                            reference1.child(mAuth.getCurrentUser().getUid()).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            HashMap<String,Object> userData1 = new HashMap<>();
+                            userData1.put("username",userName.getText().toString());
+                            userData1.put("userEmail",userEmail.getText().toString());
+                            userData1.put("userPassword",userPassword.getText().toString());
+                            userData1.put("profileImage",imagePath);
+
+                            HashMap<String,Object> userData2 = new HashMap<>();
+                            userData2.put("Uid",mAuth.getCurrentUser().getUid());
+                            userData2.put("username",userName.getText().toString());
+                            userData2.put("userEmail",userEmail.getText().toString());
+                            userData2.put("userPassword",userPassword.getText().toString());
+                            userData2.put("profileImage",imagePath);
+
+                            reference1.child(mAuth.getCurrentUser().getUid()).setValue(userData1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
@@ -136,7 +144,7 @@ public class RegisterNewUserActivity extends AppCompatActivity implements View.O
                                 }
                             });
 
-                            reference2.child(newUser).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            reference2.child(key).setValue(userData2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
