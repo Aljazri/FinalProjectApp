@@ -1,5 +1,7 @@
 package com.example.finalprojectapp;
 
+//Photo class for loading photos of users
+
 public class Photo {
 
     private String userImage;

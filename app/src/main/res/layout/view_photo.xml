@@ -19,6 +19,6 @@
         android:src="@drawable/ic_floating_add_button"
         android:backgroundTint="#082065"
         android:layout_alignParentEnd="true"
-        android:layout_margin="25dp"/>
+        android:layout_margin="25dp" />
 
 </RelativeLayout>

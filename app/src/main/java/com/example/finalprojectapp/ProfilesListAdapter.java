@@ -6,24 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ProfilesViewHolder> {
+//Adapter for search other user activity to load profiles of other users
+
+public class ProfilesListAdapter extends RecyclerView.Adapter<ProfilesListAdapter.ProfilesViewHolder> {
 
     ArrayList<Profiles> profilesList;
     Context context;
 
-    public ProfilesAdapter(Context context, ArrayList<Profiles> profilesList){
+    public ProfilesListAdapter(Context context, ArrayList<Profiles> profilesList){
         this.profilesList = profilesList;
         this.context = context;
     }
@@ -39,11 +38,14 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.Profil
     @Override
     public void onBindViewHolder(@NonNull ProfilesViewHolder holder, final int position) {
 
+        //setting on click listener for profile list item
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context.getApplicationContext(),ViewOthersProfile.class);
+                Intent intent = new Intent(context.getApplicationContext(), ViewOthersProfileActivity.class);
                 intent.putExtra("Uid",profilesList.get(position).getUid());
+                intent.putExtra("firstName",profilesList.get(position).getFirstName());
+                intent.putExtra("lastName",profilesList.get(position).getLastName());
                 intent.putExtra("name",profilesList.get(position).getUsername());
                 intent.putExtra("email",profilesList.get(position).getUserEmail());
                 intent.putExtra("image",profilesList.get(position).getProfileImage());

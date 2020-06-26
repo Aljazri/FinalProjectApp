@@ -5,71 +5,137 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterNewUserActivity"
-    android:padding="20dp">
+    android:paddingHorizontal="20dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:padding="10dp"
-        app:civ_border_color="@android:color/holo_blue_dark"
-        app:civ_border_width="5dp"
-        android:id="@+id/image"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_profile_photo_holder"
-        />
-
-    <EditText
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/user_name"
-        android:textAllCaps="false"
-        android:paddingTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:hint="User Name"
-        android:layout_below="@id/image"/>
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp"
+        android:layout_centerVertical="true">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/email"
-        android:inputType="textEmailAddress"
-        android:paddingTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textAllCaps="false"
-        android:hint="Email"
-        android:layout_below="@id/user_name"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="20dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:inputType="textPassword"
-        android:paddingTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:hint="Password"
-        android:textAllCaps="false"
-        android:layout_below="@id/email"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:paddingTop="5dp"
+                app:civ_border_color="#082065"
+                app:civ_border_width="5dp"
+                android:id="@+id/image"
+                android:layout_centerHorizontal="true"
+                app:civ_circle_background_color="#A8A5A5"
+                android:src="@drawable/ic_profile_photo_holder"
+                app:civ_border_overlay="false"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/first_name"
+                android:textAllCaps="false"
+                android:paddingTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:hint="First Name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:layout_below="@id/image"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/last_name"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:paddingTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:hint="Last Name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:layout_below="@id/first_name"/>
 
-    <Button
-        android:id="@+id/upload_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/password"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/holo_blue_dark"
-        android:text="Register" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_name"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:paddingTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:hint="User Name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:layout_below="@id/last_name"/>
 
-    <TextView
-        android:id="@+id/login_redirect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Already Registered? Login"
-        android:textAllCaps="false"
-        android:layout_below="@id/upload_button"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/holo_red_light"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                android:textSize="15sp"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:paddingTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
+                android:hint="Email"
+                android:layout_below="@id/user_name"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:paddingTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:hint="Password"
+                android:textAllCaps="false"
+                android:layout_below="@id/email"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirm_password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:paddingTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:hint=" Confirm Password"
+                android:textAllCaps="false"
+                android:layout_below="@id/password"/>
+
+            <Button
+                android:id="@+id/upload_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confirm_password"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/my_button"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:text="Register" />
+
+            <TextView
+                android:id="@+id/login_redirect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already Registered? Login"
+                android:textAllCaps="false"
+                android:textSize="10sp"
+                android:layout_below="@id/upload_button"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/holo_red_light"
+                android:layout_marginBottom="5dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

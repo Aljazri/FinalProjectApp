@@ -1,6 +1,7 @@
 package com.example.finalprojectapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class RecyclerViewPhotoAdapter extends RecyclerView.Adapter<RecyclerViewPhotoAdapter.MyViewHolder> {
+/*Adapter for showing images of current user into recycler view*/
 
-    Context context;
-    ArrayList<Photo> photos;
+public class CurrentUserPhotosListAdapter extends RecyclerView.Adapter<CurrentUserPhotosListAdapter.MyViewHolder> {
 
-    public RecyclerViewPhotoAdapter(Context context,ArrayList<Photo> photos){
+    Context context;//application context
+    ArrayList<Photo> photos;//list of photos
+
+    public CurrentUserPhotosListAdapter(Context context, ArrayList<Photo> photos){
         this.context = context;
         this.photos = photos;
     }
@@ -30,8 +33,10 @@ public class RecyclerViewPhotoAdapter extends RecyclerView.Adapter<RecyclerViewP
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         Picasso.get().load(photos.get(position).getUserImage()).into(holder.userPhoto);
+
+        //Loading images into image view of recycler view list
     }
 
     @Override

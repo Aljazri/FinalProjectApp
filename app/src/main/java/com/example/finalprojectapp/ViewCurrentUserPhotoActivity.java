@@ -3,11 +3,11 @@ package com.example.finalprojectapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,13 +21,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+//Activity Desc : Activity for viewing photos of current user
 
-public class ViewUserPhoto extends AppCompatActivity implements View.OnClickListener{
+public class ViewCurrentUserPhotoActivity extends AppCompatActivity implements View.OnClickListener{
+
+    // Instantiating variables
 
     DatabaseReference ref;
     RecyclerView recyclerView;
     ArrayList<Photo> photoList;
-    RecyclerViewPhotoAdapter adapter;
+    CurrentUserPhotosListAdapter adapter;
     FloatingActionButton addPhoto;
 
     @Override
@@ -39,10 +42,13 @@ public class ViewUserPhoto extends AppCompatActivity implements View.OnClickList
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         photoList = new ArrayList<Photo>();
         addPhoto = findViewById(R.id.add_photo);
+
         addPhoto.setOnClickListener(this);
 
         ref = FirebaseDatabase.getInstance().getReference().child("UsersImages");
 
+
+        // loading photos
         ref.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -51,7 +57,7 @@ public class ViewUserPhoto extends AppCompatActivity implements View.OnClickList
                     Photo photo = dataSnapshot.getValue(Photo.class);
                     photoList.add(photo);
                 }
-                adapter = new RecyclerViewPhotoAdapter(ViewUserPhoto.this,photoList);
+                adapter = new CurrentUserPhotosListAdapter(ViewCurrentUserPhotoActivity.this,photoList);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -65,7 +71,8 @@ public class ViewUserPhoto extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.add_photo){
-            startActivity(new Intent(ViewUserPhoto.this,AddUserPhotoActivity.class));
+            // Go to add photo activity
+            startActivity(new Intent(ViewCurrentUserPhotoActivity.this,AddUserPhotoActivity.class));
             finish();
         }
     }

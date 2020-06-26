@@ -22,13 +22,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginUser extends AppCompatActivity implements View.OnClickListener{
+
+/* Activity Description: Login user Activity*/
+
+public class LoginUserActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //instantiating variables
 
     FirebaseAuth mAuth;
 
     EditText loginUserEmail,loginUserPass;
     TextView redirectToRegister;
     Button loginButton;
+    AlertDialogBox dialogBox;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.login_user);
 
         mAuth = FirebaseAuth.getInstance();
+        dialogBox = new AlertDialogBox(LoginUserActivity.this);
 
         loginUserEmail = findViewById(R.id.login_email);
         loginUserPass = findViewById(R.id.login_password);
@@ -50,19 +57,23 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.register_redirect:
-                startActivity(new Intent(LoginUser.this,RegisterNewUserActivity.class));
+                //Go to register new user
+                startActivity(new Intent(LoginUserActivity.this,RegisterNewUserActivity.class));
                 break;
             case R.id.login_button:
+                //go to login user
                 loginUser();
                 break;
         }
     }
 
     private void loginUser() {
-
+        // logging in an already registered user
         String loginUserEmailString = loginUserEmail.getText().toString();
         String loginUserPassString = loginUserPass.getText().toString();
+        dialogBox.startDialogBox();
 
+        //Validating user
         mAuth.signInWithEmailAndPassword(loginUserEmailString,loginUserPassString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -73,7 +84,9 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Intent intent = new Intent(LoginUser.this, ProfileActivity.class);
+                            //Go to current user profile if user validates
+                            dialogBox.dismissDialog();
+                            Intent intent = new Intent(LoginUserActivity.this, CurrentUserProfileActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
@@ -81,11 +94,15 @@ public class LoginUser extends AppCompatActivity implements View.OnClickListener
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            dialogBox.dismissDialog();
                         }
                     });
                 }else{
-                    Toast.makeText(LoginUser.this, "Unable To Login", Toast.LENGTH_SHORT).show();
+
+                    //if user doesn't exist
+
+                    dialogBox.dismissDialog();
+                    Toast.makeText(LoginUserActivity.this, "Unable To Login", Toast.LENGTH_SHORT).show();
                 }
             }
         });

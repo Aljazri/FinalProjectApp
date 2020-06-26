@@ -1,18 +1,42 @@
 package com.example.finalprojectapp;
 
+//Profile class for loading profiles of users into recycler view used in search other user activity
+
 public class Profiles {
-    String profileImage,userEmail,userPassword,username,Uid;
+    String profileImage,userEmail,userPassword,username,lastName,firstName,Uid;
 
 
     public Profiles() {
     }
 
-    public Profiles(String profileImage, String userEmail, String userPassword, String username,String Uid) {
+    //constructor
+    public Profiles(String profileImage, String userEmail, String userPassword,
+                    String username,String lastName,String firstName,String Uid) {
+
         this.profileImage = profileImage;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.username = username;
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.Uid = Uid;
+    }
+
+    //Getters and setters for variables
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getProfileImage() {

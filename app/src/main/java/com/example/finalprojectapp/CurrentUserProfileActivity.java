@@ -3,7 +3,6 @@ package com.example.finalprojectapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +19,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
+//*********************Activity for showing profile of current user******************
+
+public class CurrentUserProfileActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //Instantiating variables
 
     ImageView imageView;
-    TextView userNameHolder,userEmailHolder;
+    TextView firstNameHolder,lastNameHolder,userNameHolder,userEmailHolder;
     FloatingActionButton searchOtherButton,viewUserPhotoButton;
 
     FirebaseDatabase userInformation;
@@ -35,25 +38,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance(); //Authenticating instance
         userInformation = FirebaseDatabase.getInstance();
-        ref = userInformation.getReference().child("UsersInformation1");
+        ref = userInformation.getReference().child("UsersInformation1");//Users database reference
 
         imageView = findViewById(R.id.user_profile_image);
+        firstNameHolder = findViewById(R.id.first_name_text_view);
+        lastNameHolder = findViewById(R.id.last_name_text_view);
         userNameHolder = findViewById(R.id.user_name_text_view);
         userEmailHolder = findViewById(R.id.email_text_view);
         searchOtherButton = findViewById(R.id.search_other_button);
         viewUserPhotoButton = findViewById(R.id.view_photo_button);
 
         ref.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+
+            //Building user profile page
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String imageUrl = snapshot.child("profileImage").getValue().toString();
+                    String firstName = snapshot.child("firstName").getValue().toString();
+                    String lastName = snapshot.child("lastName").getValue().toString();
                     String userName = snapshot.child("username").getValue().toString();
                     String email = snapshot.child("userEmail").getValue().toString();
 
                     Picasso.get().load(imageUrl).into(imageView);
+                    firstNameHolder.setText(firstName);
+                    lastNameHolder.setText(lastName);
                     userNameHolder.setText(userName);
                     userEmailHolder.setText(email);
                 }
@@ -61,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Do nothing
             }
         });
 
@@ -73,11 +85,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.view_photo_button:
-                Intent intent = new Intent(ProfileActivity.this,ViewUserPhoto.class);
+
+                //Go to view user photos
+
+                Intent intent = new Intent(CurrentUserProfileActivity.this, ViewCurrentUserPhotoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.search_other_button:
-                startActivity(new Intent(ProfileActivity.this,SearchOtherUser.class));
+
+                //Go to search other users
+
+                startActivity(new Intent(CurrentUserProfileActivity.this, SearchOtherUserActivity.class));
                 break;
         }
     }

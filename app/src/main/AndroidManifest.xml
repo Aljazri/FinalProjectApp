@@ -18,14 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".CurrentUserProfileActivity"/>
         <activity android:name=".RegisterNewUserActivity"/>
-        <activity android:name=".LoginUser"/>
-        <activity android:name=".ViewUserPhoto"/>
+        <activity android:name=".LoginUserActivity"/>
+        <activity android:name=".ViewCurrentUserPhotoActivity"/>
         <activity android:name=".AddUserPhotoActivity"/>
-        <activity android:name=".SearchOtherUser"/>
-        <activity android:name=".ViewOthersProfile"/>
-        <activity android:name=".ViewOtherUsersPhoto"/>
+        <activity android:name=".SearchOtherUserActivity"/>
+        <activity android:name=".ViewOthersProfileActivity"/>
+        <activity android:name=".ViewOtherUsersPhotoActivity"/>
     </application>
 
 </manifest>

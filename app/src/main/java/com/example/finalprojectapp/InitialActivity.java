@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/*Initial Activity where app starts */
+
 public class InitialActivity extends AppCompatActivity implements View.OnClickListener{
 
     FirebaseAuth mAuth;
@@ -23,8 +25,10 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
         super.onStart();
 
         if(currentUser!=null){
-            Intent intent= new Intent(InitialActivity.this, ProfileActivity.class);
-            //intent.putExtra("Key",currentUser.getUid());
+
+            //If user already logged in then go to user profile
+
+            Intent intent= new Intent(InitialActivity.this, CurrentUserProfileActivity.class);
             startActivity(intent);
             finish();
         }
@@ -37,21 +41,26 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        initialToLoginRedirect = findViewById(R.id.initial_to_login);
-        getInitialToRegisterRedirect = findViewById(R.id.initial_to_register);
+        initialToLoginRedirect = findViewById(R.id.initial_to_login);// Login button
+        getInitialToRegisterRedirect = findViewById(R.id.initial_to_register);// Register new user button
 
         initialToLoginRedirect.setOnClickListener(this);
         getInitialToRegisterRedirect.setOnClickListener(this);
     }
 
+
+    //If user not already logged in
+
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.initial_to_login:
-                startActivity(new Intent(InitialActivity.this,LoginUser.class));
+                //Go to login page
+                startActivity(new Intent(InitialActivity.this, LoginUserActivity.class));
                 finish();
                 break;
             case R.id.initial_to_register:
+                // Go to register new user page
                 startActivity(new Intent(InitialActivity.this,RegisterNewUserActivity.class));
                 finish();
                 break;

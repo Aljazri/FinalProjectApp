@@ -1,6 +1,7 @@
 package com.example.finalprojectapp;
 
 import android.os.Bundle;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,20 +19,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SearchOtherUser extends AppCompatActivity {
+// Activity Desc : Activity to list profiles of other users
+
+public class SearchOtherUserActivity extends AppCompatActivity {
 
     DatabaseReference ref;
+    String currentUid;
 
     SearchView searchBar;
     RecyclerView recyclerView;
     ArrayList<Profiles> profilesList;
-    ProfilesAdapter adapter;
+    ProfilesListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_other_user);
 
+        currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref = FirebaseDatabase.getInstance().getReference().child("UsersInformation2");
 
         recyclerView = findViewById(R.id.user_profiles);
@@ -44,6 +50,7 @@ public class SearchOtherUser extends AppCompatActivity {
 
         if(ref != null){
 
+            // creating profile list of other users available
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -52,10 +59,14 @@ public class SearchOtherUser extends AppCompatActivity {
 
                     for(DataSnapshot ds: snapshot.getChildren()){
 
-                        profilesList.add(ds.getValue(Profiles.class));
+                        Profiles user = ds.getValue(Profiles.class);
+
+                        if(!user.Uid.equals(currentUid)){
+                            profilesList.add(user);
+                        }
 
                     }
-                    adapter = new ProfilesAdapter(SearchOtherUser.this,profilesList);
+                    adapter = new ProfilesListAdapter(SearchOtherUserActivity.this,profilesList);
                     recyclerView.setAdapter(adapter);
 
                 }
@@ -84,6 +95,7 @@ public class SearchOtherUser extends AppCompatActivity {
 
     private void search(String str) {
 
+        // real time search for a user out of list of users
         ArrayList<Profiles> filteredList=new ArrayList<>();
         for(Profiles object:profilesList){
 
@@ -92,7 +104,7 @@ public class SearchOtherUser extends AppCompatActivity {
             }
         }
 
-        ProfilesAdapter filterListAdapter = new ProfilesAdapter(this,filteredList);
+        ProfilesListAdapter filterListAdapter = new ProfilesListAdapter(this,filteredList);
         recyclerView.setAdapter(filterListAdapter);
     }
 }
