@@ -2,6 +2,9 @@ package com.example.finalprojectapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,6 +82,26 @@ public class CurrentUserProfileActivity extends AppCompatActivity implements Vie
 
         viewUserPhotoButton.setOnClickListener(this);
         searchOtherButton.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.signout_button,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.logout_button:
+                mAuth.signOut();
+                startActivity(new Intent(CurrentUserProfileActivity.this,InitialActivity.class));
+                finish();
+                break;
+        }
+        return true;
     }
 
     @Override
