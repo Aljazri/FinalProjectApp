@@ -39,6 +39,10 @@ public class ProfilesListAdapter extends RecyclerView.Adapter<ProfilesListAdapte
     public void onBindViewHolder(@NonNull ProfilesViewHolder holder, final int position) {
 
         //setting on click listener for profile list item
+        holder.userName.setText(profilesList.get(position).getUsername());
+        holder.email.setText(profilesList.get(position).getUserEmail());
+        Picasso.get().load(profilesList.get(position).getProfileImage()).into(holder.profileImage);
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,10 +56,6 @@ public class ProfilesListAdapter extends RecyclerView.Adapter<ProfilesListAdapte
                 context.startActivity(intent);
             }
         });
-
-        holder.userName.setText(profilesList.get(position).getUsername());
-        holder.email.setText(profilesList.get(position).getUserEmail());
-        Picasso.get().load(profilesList.get(position).getProfileImage()).into(holder.profileImage);
 
     }
 

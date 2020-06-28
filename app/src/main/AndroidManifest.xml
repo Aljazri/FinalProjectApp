@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -21,11 +21,12 @@
         <activity android:name=".CurrentUserProfileActivity"/>
         <activity android:name=".RegisterNewUserActivity"/>
         <activity android:name=".LoginUserActivity"/>
-        <activity android:name=".ViewCurrentUserPhotoActivity"/>
-        <activity android:name=".AddUserPhotoActivity"/>
-        <activity android:name=".SearchOtherUserActivity"/>
-        <activity android:name=".ViewOthersProfileActivity"/>
-        <activity android:name=".ViewOtherUsersPhotoActivity"/>
+        <activity android:parentActivityName=".CurrentUserProfileActivity" android:name=".ViewCurrentUserPhotoActivity"/>
+        <activity android:parentActivityName=".ViewCurrentUserPhotoActivity" android:name=".AddUserPhotoActivity"/>
+        <activity android:parentActivityName=".CurrentUserProfileActivity" android:name=".SearchOtherUserActivity"/>
+        <activity android:parentActivityName=".SearchOtherUserActivity" android:name=".ViewOthersProfileActivity"/>
+        <activity android:parentActivityName=".SearchOtherUserActivity" android:name=".ViewOtherUsersPhotoActivity"/>
+        <activity android:parentActivityName=".ViewCurrentUserPhotoActivity" android:name=".ViewLargePhoto"/>
     </application>
 
 </manifest>

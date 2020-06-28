@@ -36,7 +36,7 @@ public class AddUserPhotoActivity extends AppCompatActivity implements View.OnCl
     // instantiating variables
 
     AlertDialogBox db;
-    public Uri imgUri;
+    public Uri imgUri = null;
     StorageReference mStorageRef;
     private FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
@@ -99,59 +99,69 @@ public class AddUserPhotoActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void uploadImage(){
-        String  commentString = comment.getText().toString();
-        db.startDialogBox();//Starting dialog box
-        final StorageReference filePath =  mStorageRef.child(System.currentTimeMillis()+"."+getExtension(imgUri));
-        uploadTask = filePath.putFile(imgUri);
-        uploadTask.continueWithTask(new Continuation() {
-            @Override
-            public Object then(@NonNull Task task) throws Exception {
+        final String  commentString = comment.getText().toString();
 
-                //uploading image in the storage
+        if(commentString.length()==0){
+            comment.setError("Put some comment to photo");
+            comment.requestFocus();
+        }else if(imgUri==null){
+            Toast.makeText(this, "Please select an image to upload", Toast.LENGTH_SHORT).show();
+        }else{
 
-                 return filePath.getDownloadUrl();
-            }
-         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                Uri downloadUrl = task.getResult();
-                String imagePath = downloadUrl.toString();
+            db.startDialogBox();//Starting dialog box
+            final StorageReference filePath =  mStorageRef.child(System.currentTimeMillis()+"."+getExtension(imgUri));
+            uploadTask = filePath.putFile(imgUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
 
-                DatabaseReference ref = firebaseDatabase.getReference().child("UsersImages").child(mAuth.getCurrentUser().getUid());
-                final String newPhoto = ref.push().getKey();
+                    //uploading image in the storage
 
-                HashMap<String,Object> imageData = new HashMap<>();
-                imageData.put("userImage",imagePath);
+                    return filePath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    Uri downloadUrl = task.getResult();
+                    String imagePath = downloadUrl.toString();
 
-                ref.child(newPhoto).setValue(imageData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    DatabaseReference ref = firebaseDatabase.getReference().child("UsersImages").child(mAuth.getCurrentUser().getUid());
+                    final String newPhoto = ref.push().getKey();
 
-                        //saving image url to database
+                    HashMap<String,Object> imageData = new HashMap<>();
+                    imageData.put("userImage",imagePath);
+                    imageData.put("comment",commentString);
 
-                        if(task.isSuccessful()){
+                    ref.child(newPhoto).setValue(imageData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                            // if image uploading is successful then back to previous activity
+                            //saving image url to database
 
-                            db.dismissDialog();//dismissing alert box
-                            Toast.makeText(AddUserPhotoActivity.this, "task complete", Toast.LENGTH_SHORT).show();
-                            Intent intent= new Intent(AddUserPhotoActivity.this, ViewCurrentUserPhotoActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if(task.isSuccessful()){
+
+                                // if image uploading is successful then back to previous activity
+
+                                db.dismissDialog();//dismissing alert box
+                                Toast.makeText(AddUserPhotoActivity.this, "task complete", Toast.LENGTH_SHORT).show();
+                                Intent intent= new Intent(AddUserPhotoActivity.this, ViewCurrentUserPhotoActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+
+                                //If image upload is unsuccessful
+
+                                db.dismissDialog();//dismissing dialog box
+
+                                //unsuccessful image upload message
+                                Toast.makeText(AddUserPhotoActivity.this, "can't post the photo", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-
-                            //If image upload is unsuccessful
-
-                            db.dismissDialog();//dismissing dialog box
-
-                            //unsuccessful image upload message
-                            Toast.makeText(AddUserPhotoActivity.this, "can't post the photo", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
     }
 
     @Override

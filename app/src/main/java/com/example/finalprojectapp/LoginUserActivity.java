@@ -32,7 +32,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
     FirebaseAuth mAuth;
 
     EditText loginUserEmail,loginUserPass;
-    TextView redirectToRegister;
+    TextView redirectToRegister,invalidUserText;
     Button loginButton;
     AlertDialogBox dialogBox;
 
@@ -44,11 +44,13 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
         dialogBox = new AlertDialogBox(LoginUserActivity.this);
 
+        invalidUserText = findViewById(R.id.invalid_user_text);
         loginUserEmail = findViewById(R.id.login_email);
         loginUserPass = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         redirectToRegister = findViewById(R.id.register_redirect);
 
+        invalidUserText.setVisibility(View.INVISIBLE);
         redirectToRegister.setOnClickListener(this);
         loginButton.setOnClickListener(this);
     }
@@ -71,41 +73,52 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         // logging in an already registered user
         String loginUserEmailString = loginUserEmail.getText().toString();
         String loginUserPassString = loginUserPass.getText().toString();
-        dialogBox.startDialogBox();
 
-        //Validating user
-        mAuth.signInWithEmailAndPassword(loginUserEmailString,loginUserPassString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+        if(loginUserEmailString.length()==0){
+            loginUserEmail.setError("Please enter email id");
+            loginUserEmail.requestFocus();
+        }else if(loginUserPassString.length()<7){
+            loginUserPass.setError("Password must be at least 7 digit long");
+            loginUserPass.requestFocus();
+        }
+        else{
 
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UsersInformation");
+            dialogBox.startDialogBox();
+            //Validating user
+            mAuth.signInWithEmailAndPassword(loginUserEmailString,loginUserPassString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
 
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            //Go to current user profile if user validates
-                            dialogBox.dismissDialog();
-                            Intent intent = new Intent(LoginUserActivity.this, CurrentUserProfileActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
-                        }
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UsersInformation");
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            dialogBox.dismissDialog();
-                        }
-                    });
-                }else{
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //Go to current user profile if user validates
+                                dialogBox.dismissDialog();
+                                Intent intent = new Intent(LoginUserActivity.this, CurrentUserProfileActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
 
-                    //if user doesn't exist
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                dialogBox.dismissDialog();
+                            }
+                        });
+                    }else{
 
-                    dialogBox.dismissDialog();
-                    Toast.makeText(LoginUserActivity.this, "Unable To Login", Toast.LENGTH_SHORT).show();
+                        //if user doesn't exist
+
+                        dialogBox.dismissDialog();
+                        invalidUserText.setVisibility(View.VISIBLE);
+                        invalidUserText.setText("Invalid User, Please try again!!!");
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 }

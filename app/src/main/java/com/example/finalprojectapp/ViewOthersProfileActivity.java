@@ -37,7 +37,7 @@ public class ViewOthersProfileActivity extends AppCompatActivity implements View
 
         mAuth = FirebaseAuth.getInstance();
         userInformation = FirebaseDatabase.getInstance();
-        ref = userInformation.getReference().child("UsersInformation1");
+        ref = userInformation.getReference().child("UsersInformation2");
         uid = getIntent().getStringExtra("Uid");
 
         // Creating other user profile

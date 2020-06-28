@@ -19,6 +19,14 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/invalid_user_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invlid User"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/red"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

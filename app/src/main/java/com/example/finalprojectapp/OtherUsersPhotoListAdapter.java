@@ -1,10 +1,13 @@
 package com.example.finalprojectapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,24 +36,37 @@ public class OtherUsersPhotoListAdapter extends RecyclerView.Adapter<OtherUsersP
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         //loading images of other users
+        holder.comment.setText(photos.get(position).getComment());
         Picasso.get().load(photos.get(position).getUserImage()).into(holder.userPhoto);
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(),ViewLargePhoto.class);
+                intent.putExtra("imageUrl",photos.get(position).getUserImage());
+                intent.putExtra("comment",photos.get(position).getComment());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {
-        return photos.size();
-    }
+    public int getItemCount() { return photos.size();}
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView userPhoto;
+        TextView comment;
+        View view;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userPhoto = itemView.findViewById(R.id.other_user_photo_holder);
+            comment = itemView.findViewById(R.id.other_comment);
+            view = itemView;
         }
     }
 

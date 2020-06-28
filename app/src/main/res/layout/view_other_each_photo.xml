@@ -2,17 +2,34 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
     android:layout_margin="20dp"
     android:background="@android:color/holo_blue_dark"
     app:cardCornerRadius="20dp"
     app:cardElevation="20dp">
 
-    <ImageView
-        android:id="@+id/other_user_photo_holder"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:src="@drawable/ic_profile_photo_holder"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/other_user_photo_holder"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="#C5BDBD"
+            android:src="@drawable/ic_profile_photo_holder"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/other_comment"
+            android:text="Comment"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:layout_below="@id/other_user_photo_holder"
+            android:layout_marginLeft="20dp"/>
+
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

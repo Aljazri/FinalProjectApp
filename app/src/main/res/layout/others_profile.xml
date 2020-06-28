@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="20dp">
+    android:padding="10dp"
+    android:layout_centerVertical="true">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -28,56 +29,65 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="65dp"
         android:background="@android:color/holo_blue_dark"
-        android:id="@+id/card_view"
         app:cardCornerRadius="20dp"
         app:cardElevation="30dp">
 
         <RelativeLayout
+            android:id="@+id/relative_layout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/others_profile_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_profile_photo_holder"
-                app:civ_border_width="5dp"
-                app:civ_circle_background_color="#979191"
-                app:civ_border_color="#082065"/>
-
-            <TextView
-                android:id="@+id/other_first_name_text_view"
+            <RelativeLayout
+                android:id="@+id/relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="First Name"
-                android:layout_below="@id/others_profile_image"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="135dp"
-                android:textSize="15sp"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/other_last_name_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Last Name"
-                android:layout_below="@id/other_first_name_text_view"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="135dp"
-                android:textStyle="bold"
-                android:textSize="15dp"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/others_profile_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_profile_photo_holder"
+                    app:civ_circle_background_color="#E8E3E3"
+                    app:civ_border_width="5dp"
+                    app:civ_border_color="#082065"/>
+
+                <TextView
+                    android:id="@+id/other_first_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:layout_below="@id/others_profile_image"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/other_last_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:visibility="visible"
+                    android:layout_below="@id/other_first_name_text_view"
+                    android:layout_marginTop="20dp"
+                   android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/other_user_name_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:layout_below="@id/other_last_name_text_view"
+                android:layout_below="@id/relative_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:textColor="#2196F3"
